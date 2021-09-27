@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title|title}}</title>
+    
+    <style>
+        @page {
+            size: letter portrait;
+            {%for instance in awards%}
+            {% if instance.background.background %}
+            background-image: url('{{ instance.background.background.path }}');
+            {% endif %}
+            {% endfor %}
+            @frame content_frame {
+                left: 65pt;
+                width: 482pt;
+                top: 80pt;
+                height: 642pt;
+                /* -pdf-frame-border: 0;     for debugging the layout */
+            }
+        }
+        .container {
+            text-align: center;
+            /* margin-top: 70pt; */
+        }
+        .award-title {
+            font-size: 50px;
+            line-height: 1.1;
+            font-family: 'Times New Roman', Times, serif;
+            color: #8612FB;
+        }
+        .awardee {
+            font-size: 40px;
+        }
+        .citation {
+            font-family: sans-serif;
+            word-wrap: break-word;
+            font-size: 20px;
+        }
+        .citation > p{
+            width: 200;
+        }
+        table {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    {%for instance in awards%}
+    <div class="container">
+        <div class="award-title">
+            <h1>{{instance.award_title|upper}}</h1>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="awardee">
+            <strong><u>{{instance.name|upper}}</u></strong>
+        </div>
+        <div class="citation">
+            <p>
+                {% if instance.award_title|title == "Excellence Award" %}
+                    For {% if instance.gender == "Male" %}his{% else %}her{% endif %} exemplary performance, commitment, dedication,
+                    and tireless support for the company.
+                {% else %}
+                    In Recognition of {% if instance.gender == "Male" %}His{% else %}Her{% endif %} Outstanding Performance and Dedicated Service.
+                {% endif %}
+            </p>
+            <p>
+                Given this {{ instance.date|date:"dS" }} day of {{instance.date|date:"F"}} {{instance.date|date:"Y"}} at 401 CKY Bldg. R.N.Abejuela St, Cagayan de Oro City.
+            </p>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <table width=100%>
+            <tr>
+                <td style="font-size: 20px;">___________________</td>
+                <td style="font-size: 20px;">___________________</td>
+            </tr>
+            <tr>
+                <td><strong style="font-size: 20px;">{{director1|upper}}</strong></td>
+                <td><strong style="font-size: 20px;">{{director2|upper}}</strong></td>
+            </tr>
+            <tr>
+                <td style="font-size: 15px;">Director</td>
+                <td style="font-size: 15px;">Director</td>
+            </tr>
+        </table>
+    </div>
+    {% endfor %}
+</body>
+</html>

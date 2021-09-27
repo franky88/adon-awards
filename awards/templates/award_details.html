@@ -1,0 +1,111 @@
+{% extends "index.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'awards:list' %}">Awards</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{title|title}}</li>
+    </ol>
+</nav>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <form action="" method="post">
+                {% csrf_token %}
+                
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <h5>Update {{instance.name|title}}</h5>
+                        <div>
+                            <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteAward"><i class="fas fa-trash"></i></button> <a href="{% url 'awards:save_pdf' instance.award_code %}" class="btn btn-success btn-sm"><i class="fas fa-download"></i> Save PDF</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    
+                        {{ form|crispy }}
+                        
+                    <strong>Note: </strong> Click update to preview the changes.
+                </div>
+                <div class="card-footer bg-transparent">
+                    <div class="d-flex justify-content-end">
+                        <a type="button" class="btn btn-outline-secondary btn-sm" href="{% url 'awards:list' %}">Cancel</a>
+                        &nbsp&nbsp<input class="btn btn-primary btn-sm" type="submit" value="Update"> 
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Certificate Preview</h5>
+            </div>
+            <div class="card-body">
+                <div {% if instance.background.background %} style="background-image: url('{{ instance.background.background.url }}'); background-repeat: no-repeat; background-size: contain; text-align: center; height: 100vh;" {% else %} {% endif %}>
+                    <div class="d-flex flex-column justify-content-around" style="width: 80%; margin: auto;">
+                        <div style="margin-top: 80px;">
+                            <h2 style="font-family: 'Times New Roman', Times, serif;">
+                                {{ instance.award_title|upper }}
+                            </h2>
+                        </div>
+                        <div style="margin-top: 30px;">
+                            <h4>
+                                <strong>{{instance.name|upper}}</strong>
+                            </h4>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <p>
+                                {% if instance.award_title|title == "Excellence Award" %}
+                                    For {% if instance.gender == "Male" %}his{% else %}her{% endif %} exemplary performance, commitment, dedication,
+                                    and tireless support for the company.
+                                {% else %}
+                                    In Recognition of {% if instance.gender == "Male" %}His{% else %}Her{% endif %} Outstanding Performance and Dedicated Service.
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                Given this {{ instance.date|date:"dS" }} day of {{instance.date|date:"F"}} {{instance.date|date:"Y"}} at 401 CKY Bldg. R.N.Abejuela St, Cagayan de Oro City.
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-around" style="margin-top: 30px;">
+                            <div class="d-flex align-items-center flex-column">
+                                <strong style="border-top: 1px solid #222;">PETER BAILY</strong>
+                                <small>Director</small>
+                            </div>
+                            <div class="d-flex align-items-center flex-column">
+                                <strong style="border-top: 1px solid #222;">PAUL HARDING</strong>
+                                <small>Director</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteAward" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Award</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete <strong>{{ instance.name|title }}</strong> award's?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">No</button>
+                <a href="{% url 'awards:delete' instance.award_code %}" type="button" class="btn btn-outline-danger btn-sm">Yes</a>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+{% endblock %}

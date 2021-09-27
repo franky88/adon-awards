@@ -1,0 +1,10 @@
+#certificate-preview {
+  {% if instance.background.background %}
+  background-image: url({{ instance.background.background.url }});
+  background-repeat: no-repeat;
+  background-size: contain;
+  text-align: center;
+  heigth: 100vh;
+  {% else %}
+  {% endif %}
+}
