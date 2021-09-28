@@ -10,7 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Vollkorn&display=swap" rel="stylesheet">
     <title>{{title|title}}</title>
     <style>
-        
+        @font-face {
+            font-family: VollkornR;
+            src: url("../static/fonts/Vollkorn-Regular.ttf");
+        }
         @page {
             size: letter portrait;
             {% if instance.background.background %}
@@ -23,51 +26,43 @@
                 height: 652pt;
                 /* -pdf-frame-border: 0;     for debugging the layout */
             }
-            @font-face {
-                font-family: VollkornR;
-                src: url("..\static\fonts\Vollkorn-Regular.ttf");
-            }
         }
         .container {
             text-align: center;
             /* margin-top: 70pt; */
         }
         .award-title {
-            font-family: VollkornR;
-            font-size: 40px;
+            /* font-family: "VollkornR"; */
+            font-size: 35px;
             line-height: 1.1;
             font-family: 'Times New Roman', Times, serif;
-            color: #8612FB;
+            color: #1e0224;
         }
         .awardee {
-            font-size: 40px;
+            font-size: 45px;
+            font-weight: bold;
         }
         .citation {
             font-family: sans-serif;
             word-wrap: break-word;
             font-size: 20px;
-        }
-        .citation > p{
-            width: 200;
+            color: #1e0224;
         }
         table {
             margin-top: 30px;
+            color: #18011d;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <br>
-        <br>
         <div class="award-title">
             <h1>{{instance.award_title|upper}}</h1>
         </div>
         <br>
-        <br>
-        <br>
-        <br>
         <div class="awardee">
-            <strong><u>{{instance.name|upper}}</u></strong>
+            <strong>{{instance.name|upper}}</strong>
         </div>
         <div class="citation">
             <p>
@@ -86,8 +81,6 @@
         <br>
         <br>
         <br>
-        <br>
-        <br>
         <table width=100%>
             <tr>
                 <td style="font-size: 20px;">___________________</td>
@@ -102,6 +95,7 @@
                 <td style="font-size: 15px;">Director</td>
             </tr>
         </table>
+        <br>
         <div style="margin-top: 30px;">
             <img src="../static/AOG.png" alt="" style="width: 200px;">
         </div>

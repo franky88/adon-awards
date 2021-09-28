@@ -1,20 +1,36 @@
-{% extends "index.html" %}
+{% extends "main.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{%url 'awards:list'%}">Awards</a></li>
-        <!-- <li class="breadcrumb-item active" aria-current="page">Overview</li> -->
+        <li class="breadcrumb-item active" aria-current="page">Awards</li>
     </ol>
 </nav>
 <div class="row">
+    <div class="col-xl-4 col-lg-5">
+        <div class="card">
+            <div class="card-header">
+                <h5>Add Award</h5>
+            </div>
+            <form action="" method="post">
+                <div class="card-body">
+                    <!-- Earnings (Monthly) Card Example -->
+                    {% csrf_token %}
+                    {{form|crispy}}
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-primary btn-sm" type="submit" value="Add award">
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="col-xl-8 col-lg-7">
         <div class="card">
             <div class="card-header">
                 <div class="d-flex justify-content-between">
                     <strong>{{title|title}}</strong>
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addAwardee">
-                        <i class="far fa-plus-square"></i> Award
+                    <button disabled type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="left" title="Under construction">
+                        <i class="bi bi-save"></i> EXPORT PDF
                     </button>
                 </div>
             </div>
@@ -35,143 +51,13 @@
                             <td>{{awardee.name|title}}</td>
                             <td>{{awardee.award_title|title}}</td>
                             <td>{{awardee.date|date:"D d Y"}}</td>
-                            <td><a href="{%url 'awards:update' awardee.award_code%}" class="btn btn-outline-primary btn-sm"><i class="far fa-edit"></i></a></td>
-                            <td><a href="{% url 'awards:save_pdf' awardee.award_code %}" target="_blank" class="btn btn-outline-success btn-sm"><i class="fas fa-download"></i> PDF</a></td>
+                            <td><a href="{%url 'awards:update' awardee.award_code%}" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil-square"></i></a></td>
+                            <td><a href="{% url 'awards:view_pdf' awardee.award_code %}" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-download"></i> PDF</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
-    <div class="col-xl-4 col-lg-5">
-        <div class="card">
-            <div class="card-header">
-                <h5>Award filters</h5>
-            </div>
-            <div class="card-body">
-                <!-- Earnings (Monthly) Card Example -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card border-left-primary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Earnings (Monthly)</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <br>
-                <!-- Earnings (Monthly) Card Example -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card border-left-success shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            Earnings (Annual)</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <br>
-                <!-- Earnings (Monthly) Card Example -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card border-left-info shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
-                                        </div>
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col-auto">
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="progress progress-sm mr-2">
-                                                    <div class="progress-bar bg-info" role="progressbar"
-                                                        style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                        aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <br>
-                <!-- Pending Requests Card Example -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card border-left-warning shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                            Pending Requests</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
-<!-- Vertically centered scrollable modal -->
-<div class="modal fade" id="addAwardee" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Add Awardee</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="" method="post">
-                {% csrf_token %}
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            {{form|crispy}}
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                    <input class="btn btn-primary btn-sm" type="submit" value="Add">
-                </div>
-            </form>
         </div>
     </div>
 </div>

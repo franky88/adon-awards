@@ -1,4 +1,4 @@
-{% extends "index.html" %}
+{% extends "main.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
@@ -18,7 +18,7 @@
                     <div class="d-flex justify-content-between">
                         <h5>Update {{instance.name|title}}</h5>
                         <div>
-                            <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteAward"><i class="fas fa-trash"></i></button> <a href="{% url 'awards:save_pdf' instance.award_code %}" class="btn btn-success btn-sm"><i class="fas fa-download"></i> Save PDF</a>
+                            <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteAward"><i class="bi bi-trash"></i></button> <a href="{% url 'awards:export_pdf' instance.award_code %}" class="btn btn-success btn-sm"><i class="bi bi-download"></i> Save PDF</a>
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                                 Given this {{ instance.date|date:"dS" }} day of {{instance.date|date:"F"}} {{instance.date|date:"Y"}} at 401 CKY Bldg. R.N.Abejuela St, Cagayan de Oro City.
                             </p>
                         </div>
-                        <div class="d-flex justify-content-around" style="margin-top: 80px;">
+                        <div class="d-flex justify-content-around" style="margin-top: 50px;">
                             <div class="d-flex align-items-center flex-column">
                                 <strong style="border-top: 1px solid #222;">{{peter|upper}}</strong>
                                 <small>Director</small>
@@ -79,6 +79,9 @@
                                 <strong style="border-top: 1px solid #222;">{{paul|upper}}</strong>
                                 <small>Director</small>
                             </div>
+                        </div>
+                        <div>
+                            <img src="{% static 'AOG.png' %}" alt="" style="width: 100px; height: auto;">
                         </div>
                     </div>
                     
