@@ -18,7 +18,7 @@ def render_pdf_view(request, *args, **kwargs):
     context = {
         'title': 'adon award',
         'instance': award,
-        'director1': 'peter baily',
+        'director1': 'peter bailey',
         'director2': 'paul harding',
     }
     # Create a Django response object, and specify content_type as pdf
@@ -109,7 +109,9 @@ def updateAwardee(request, award_code):
     context = {
         "title": "Update awardee",
         "form": form,
-        "instance": awardee
+        "instance": awardee,
+        'peter': 'peter bailey',
+        'paul': 'paul harding',
     }
     return render(request, "award_details.html", context)
 

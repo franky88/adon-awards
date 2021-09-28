@@ -5,8 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vollkorn&display=swap" rel="stylesheet">
     <title>{{title|title}}</title>
     <style>
+        
         @page {
             size: letter portrait;
             {% if instance.background.background %}
@@ -19,17 +23,18 @@
                 height: 652pt;
                 /* -pdf-frame-border: 0;     for debugging the layout */
             }
+            @font-face {
+                font-family: VollkornR;
+                src: url("..\static\fonts\Vollkorn-Regular.ttf");
+            }
         }
         .container {
             text-align: center;
             /* margin-top: 70pt; */
         }
         .award-title {
-            {% if instance.award_title|title == "Top Performing New Hire" %}
+            font-family: VollkornR;
             font-size: 40px;
-            {% else %}
-            font-size: 40px;
-            {% endif %}
             line-height: 1.1;
             font-family: 'Times New Roman', Times, serif;
             color: #8612FB;
@@ -97,7 +102,10 @@
                 <td style="font-size: 15px;">Director</td>
             </tr>
         </table>
-        <img src="{% static 'bg_blue.png' %}" alt="">
+        <div style="margin-top: 30px;">
+            <img src="../static/AOG.png" alt="" style="width: 200px;">
+        </div>
+        
     </div>
 </body>
 </html>

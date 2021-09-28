@@ -34,7 +34,7 @@
                         <tr>
                             <td>{{awardee.name|title}}</td>
                             <td>{{awardee.award_title|title}}</td>
-                            <td>{{awardee.date}}</td>
+                            <td>{{awardee.date|date:"D d Y"}}</td>
                             <td><a href="{%url 'awards:update' awardee.award_code%}" class="btn btn-outline-primary btn-sm"><i class="far fa-edit"></i></a></td>
                             <td><a href="{% url 'awards:save_pdf' awardee.award_code %}" target="_blank" class="btn btn-outline-success btn-sm"><i class="fas fa-download"></i> PDF</a></td>
                         </tr>

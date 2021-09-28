@@ -43,9 +43,9 @@
                 <h5>Certificate Preview</h5>
             </div>
             <div class="card-body">
-                <div {% if instance.background.background %} style="background-image: url('{{ instance.background.background.url }}'); background-repeat: no-repeat; background-size: contain; text-align: center; height: 100vh;" {% else %} {% endif %}>
-                    <div class="d-flex flex-column justify-content-around" style="width: 80%; margin: auto;">
-                        <div style="margin-top: 80px;">
+                <div {% if instance.background.background %} style="background-image: url('{{ instance.background.background.url }}'); background-repeat: no-repeat; background-size: 100% auto; background-position: center; height: 490pt; text-align: center;" {% else %} {% endif %}>
+                    <div class="d-flex flex-column justify-content-between" style="width: 80%; margin: auto;">
+                        <div style="margin-top: 100px;">
                             <h2 style="font-family: 'Times New Roman', Times, serif;">
                                 {{ instance.award_title|upper }}
                             </h2>
@@ -70,13 +70,13 @@
                                 Given this {{ instance.date|date:"dS" }} day of {{instance.date|date:"F"}} {{instance.date|date:"Y"}} at 401 CKY Bldg. R.N.Abejuela St, Cagayan de Oro City.
                             </p>
                         </div>
-                        <div class="d-flex justify-content-around" style="margin-top: 30px;">
+                        <div class="d-flex justify-content-around" style="margin-top: 80px;">
                             <div class="d-flex align-items-center flex-column">
-                                <strong style="border-top: 1px solid #222;">PETER BAILY</strong>
+                                <strong style="border-top: 1px solid #222;">{{peter|upper}}</strong>
                                 <small>Director</small>
                             </div>
                             <div class="d-flex align-items-center flex-column">
-                                <strong style="border-top: 1px solid #222;">PAUL HARDING</strong>
+                                <strong style="border-top: 1px solid #222;">{{paul|upper}}</strong>
                                 <small>Director</small>
                             </div>
                         </div>
