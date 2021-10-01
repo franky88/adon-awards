@@ -10,12 +10,18 @@ class AddAwardeeForm(forms.ModelForm):
             "award_title",
             "name",
             "date",
-            "gender",
+            "citation",
+            # "gender",
             "background"
         ]
-        # widgets = {
-        #     'background': RadioSelect()
-        # }
         widgets = {
             'date': TextInput(attrs={'type': 'date'})
         }
+
+
+class AddAwardeeTitleForm(forms.ModelForm):
+    class Meta:
+        model = AwardTitle
+        fields = [
+            "title",
+        ]

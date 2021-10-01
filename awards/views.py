@@ -4,7 +4,7 @@ from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import AwardTitle, Awardee
-from .forms import AddAwardeeForm
+from .forms import AddAwardeeForm, AddAwardeeTitleForm
 from django.http import HttpResponse
 from django.db.models import Q
 from django.template.loader import get_template
@@ -79,20 +79,27 @@ def adwardList(request):
     awardees = Awardee.objects.all()
     adward_title = AwardTitle.objects.all()
     form = AddAwardeeForm(request.POST or None)
+    title_form = AddAwardeeTitleForm(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
+        if title_form.is_valid():
+            obj = title_form.save(commit=False)
+            obj.save()
         return redirect('awards:list')
     else:
         form = AddAwardeeForm(request.POST or None)
+        title_form = AddAwardeeTitleForm(request.POST or None)
+
     context = {
         "title": "list of awards",
         "awardees": awardees,
         "form": form,
         "to_export_awards": to_export_awards,
-        "adward_title": adward_title
+        "adward_title": adward_title,
+        "title_form": title_form
     }
     return render(request, "list_awardee.html", context)
 
@@ -115,6 +122,7 @@ def updateAwardee(request, award_code):
     return render(request, "award_details.html", context)
 
 
+@login_required()
 def deleteAward(request, award_code):
     award = get_object_or_404(Awardee, award_code=award_code)
     award.delete()
@@ -122,13 +130,37 @@ def deleteAward(request, award_code):
 
 
 # Create your views here.
-
-def awardFilter(request, *args, **kwargs):
-    afilter = kwargs.get('pk')
-    print(afilter)
-    fresult = Awardee.objects.filter(award_title=afilter)
+@login_required()
+def awardTitle(request):
+    award_titles = AwardTitle.objects.all()
+    title_form = AddAwardeeTitleForm(request.POST or None)
+    if request.method == "POST":
+        if title_form.is_valid():
+            instance = title_form.save(commit=False)
+            instance.save()
+        return redirect('awards:award_title')
+    else:
+        title_form = AddAwardeeTitleForm(request.POST or None)
     context = {
-        "title": "filter results",
-        "fresult": fresult,
+        "title": "award title",
+        "award_titles": award_titles,
+        "title_form": title_form,
     }
-    return render(request, "list_awardee.html", context)
+    return render(request, "list_award_title.html", context)
+
+
+@login_required()
+def updateTitle(request, *args, **kwargs):
+    title_pk = kwargs.get('pk')
+    instance = get_object_or_404(AwardTitle, pk=title_pk)
+    form = AddAwardeeTitleForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+        return redirect('awards:award_title')
+    context = {
+        # "title": "Update title",
+        "edit_form": form,
+        "title_instance": instance,
+    }
+    return render(request, "list_award_title.html", context)

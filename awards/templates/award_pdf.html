@@ -1,13 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC
+"-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang = "EN" xml:lang = "EN" dir = "ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vollkorn&display=swap" rel="stylesheet">
+    <meta http-equiv="content-type" content="text/xml; charset=utf-8" />
     <title>{{title|title}}</title>
     <style>
         @font-face {
@@ -16,15 +14,12 @@
         }
         @page {
             size: letter portrait;
-            {% if instance.background.background %}
-            background: url({{ instance.background.background.path }});
-            {% endif %}
+            background-image: url('{{instance.background.background.path}}');
             @frame content_frame {
                 left: 65pt;
                 width: 482pt;
                 top: 70pt;
                 height: 652pt;
-                /* -pdf-frame-border: 0;     for debugging the layout */
             }
         }
         .container {
@@ -32,10 +27,9 @@
             /* margin-top: 70pt; */
         }
         .award-title {
-            /* font-family: "VollkornR"; */
+            font-family: "VollkornR";
             font-size: 35px;
             line-height: 1.1;
-            font-family: 'Times New Roman', Times, serif;
             color: #1e0224;
         }
         .awardee {
@@ -56,7 +50,9 @@
 </head>
 <body>
     <div class="container">
-        <br>
+        <div style="margin-top: 30px;">
+            <img src="{{instance.logo.logo.path}}" alt="" style="width: 200px;">
+        </div>
         <div class="award-title">
             <h1>{{instance.award_title|upper}}</h1>
         </div>
@@ -66,15 +62,11 @@
         </div>
         <div class="citation">
             <p>
-                {% if instance.award_title|title == "Excellence Award" %}
-                    For {% if instance.gender == "Male" %}his{% else %}her{% endif %} exemplary performance, commitment, dedication,
-                    and tireless support for the company.
-                {% else %}
-                    In Recognition of {% if instance.gender == "Male" %}His{% else %}Her{% endif %} Outstanding Performance and Dedicated Service.
-                {% endif %}
+                
+                {{ instance.citation }}
             </p>
             <p>
-                Given this {{ instance.date|date:"dS" }} day of {{instance.date|date:"F"}} {{instance.date|date:"Y"}} at 401 CKY Bldg. R.N.Abejuela St, Cagayan de Oro City.
+                Presented on {{ instance.date|date:"d" }}<sup>{{ instance.date|date:"S" }}</sup> day of {{instance.date|date:"F"}} {{instance.date|date:"Y"}} by the Ad On Group.
             </p>
         </div>
         <br>
@@ -97,7 +89,7 @@
         </table>
         <br>
         <div style="margin-top: 30px;">
-            <img src="../static/AOG.png" alt="" style="width: 200px;">
+            <img src="{{instance.logo.logo.path}}" alt="" style="width: 100px;">
         </div>
         
     </div>

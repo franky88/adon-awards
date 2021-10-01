@@ -12,6 +12,9 @@ class AwardTitle(models.Model):
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
 
+    class Meta:
+        ordering = ['-created']
+
     def __str__(self):
         return self.title.title()
 
@@ -32,18 +35,30 @@ class CertBG(models.Model):
         return str(self.name).title()
 
 
+class AdonLogo(models.Model):
+    logo_name = models.CharField(max_length=200, blank=True, null=True)
+    logo = models.ImageField(
+        upload_to=background_directory_path, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.logo_name)
+
+
 class Awardee(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     award_code = models.CharField(max_length=8, unique=True, blank=True)
-    award_title = models.ForeignKey(AwardTitle, on_delete=models.CASCADE)
+    award_title = models.ForeignKey(AwardTitle, on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=200)
+    citation = models.TextField(
+        default="In Recognition of Her Outstanding Performance and Dedicated Service.")
     date = models.DateField(
         help_text="Date of the awarding ceremony", verbose_name="date of awarding")
-    Gender = models.TextChoices('Gender', 'Male Female')
-    gender = models.CharField(
-        default="Male", choices=Gender.choices, max_length=10)
+    # Gender = models.TextChoices('Gender', 'Male Female')
+    # gender = models.CharField(
+    #     default="Male", choices=Gender.choices, max_length=10)
     background = models.ForeignKey(
         CertBG, on_delete=models.CASCADE, blank=True, null=True, verbose_name="background theme")
+    logo = models.ForeignKey(AdonLogo, on_delete=models.DO_NOTHING, default=1)
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
 

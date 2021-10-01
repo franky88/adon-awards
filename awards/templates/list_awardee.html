@@ -16,7 +16,14 @@
                 <div class="card-body">
                     <!-- Earnings (Monthly) Card Example -->
                     {% csrf_token %}
-                    {{form|crispy}}
+                    <div class="d-flex flex-row">
+                        {{form.award_title|as_crispy_field}}
+                        <a href="" class="btn btn-outline-primary" style="margin-left: 5px; height: 40px; margin-top: 30px;" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editTitle"><i class="bi bi-plus-square"></i></a>
+                    </div>
+                    {{form.name|as_crispy_field}}
+                    {{form.citation|as_crispy_field}}
+                    {{form.date|as_crispy_field}}
+                    {{form.background|as_crispy_field}}
                 </div>
                 <div class="modal-footer">
                     <input class="btn btn-primary btn-sm" type="submit" value="Add award">
@@ -59,6 +66,29 @@
                 </table>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editTitle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Add Award Title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="" method="post">
+            <div class="modal-body">
+                {% csrf_token %}
+                {{ title_form|crispy }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <input class="btn btn-primary" type="submit" value="Add Title">
+            </div>
+        </form>
+      </div>
     </div>
 </div>
 {% endblock %}

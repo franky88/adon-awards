@@ -1,35 +1,42 @@
 {% extends "main.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block content %}
 <div class="row">
     <div class="col-sm-4 offset-sm-4">
-        {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-        {% endif %}
-
-        {% if next %}
-            {% if user.is_authenticated %}
-                <p>Your account doesn't have access to this page. To proceed,
-                please login with an account that has access.</p>
-            {% else %}
-                <p>Please login to see this page.</p>
-            {% endif %}
-        {% endif %}
-        <div class="card">
-            <div class="card-header">
-                <strong>Login</strong>
+        <div class="d-flex flex-column" style="margin-top: 100px;">
+            <div class="d-flex flex-column align-items-center">
+                <img src="{% static 'AOG.png' %}" alt="" style="width: 150px;">
+                <br>
+                <div>
+                    {% if next %}
+                        {% if user.is_authenticated %}
+                            <p>Your account doesn't have access to this page. To proceed,
+                            please login with an account that has access.</p>
+                        {% else %}
+                            <p>Please login to see this page.</p>
+                        {% endif %}
+                    {% endif %}
+                </div>
             </div>
-            <form method="post" action="{% url 'login' %}">
-            <div class="card-body">
-                {% csrf_token %}
-                {{form|crispy}}
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    <strong>Login</strong>
+                </div>
+                <form method="post" action="{% url 'login' %}">
+                <div class="card-body">
+                    {% csrf_token %}
+                    {{form|crispy}}
+                </div>
+                <div class="card-footer">
+                    <input class="btn btn-primary btn-sm" type="submit" value="login" />
+                    <input type="hidden" name="next" value="{{ next }}" />
+                </div>
+                </form>
             </div>
-            <div class="card-footer">
-                <input class="btn btn-primary btn-sm" type="submit" value="login" />
-                <input type="hidden" name="next" value="{{ next }}" />
-            </div>
-            </form>
         </div>
+        
     </div>
 </div>
 <br>

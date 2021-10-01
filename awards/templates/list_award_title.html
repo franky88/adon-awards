@@ -1,0 +1,68 @@
+{% extends "main.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">{{title|title}}</li>
+    </ol>
+</nav>
+<div class="row">
+    <div class="col-xl-4 col-lg-5">
+        <div class="card">
+            <div class="card-header">
+                <h5>Add Award Title</h5>
+            </div>
+            <form action="" method="post">
+                <div class="card-body">
+                    <!-- Earnings (Monthly) Card Example -->
+                    {% csrf_token %}
+                    {% if update_form %}
+                    {{update_form|crispy}}
+                    {% else %}
+                    {{form|crispy}}
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-primary btn-sm" type="submit" value="Add Title">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-xl-8 col-lg-7">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <strong>{{title|title}}</strong>
+                    <button disabled type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="left" title="Under construction">
+                        <i class="bi bi-save"></i> EXPORT PDF
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="awardee" class="table table-stripe table-sm">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for awardee in award_titles %}
+                        <tr>
+                            <td>{{awardee.title|title}}</td>
+                            <td>
+                                <a href="{% url 'awards:update_title' awardee.pk %}" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editTitle">
+                                    <i class="bi bi-pencil-square"></i> 
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
