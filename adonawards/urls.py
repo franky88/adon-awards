@@ -16,9 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
+from rest_framework import routers
+from aog_award_api.views import AwardViewSet, AwardTitleViewSet
 from django.conf import settings
 
+router = routers.DefaultRouter()
+router.register(r'awards', AwardViewSet, basename='award')
+router.register(r'award-titles', AwardTitleViewSet)
+
 urlpatterns = [
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
     path('', include('awards.urls')),
     path('accounts/', include('django.contrib.auth.urls')),

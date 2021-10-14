@@ -1,0 +1,57 @@
+{% extends "main.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'awards:award_title' %}">Award Title</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{title|title}}</li>
+    </ol>
+</nav>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <form action="" method="post">
+                {% csrf_token %}
+                
+                <div class="card-header">
+                    Updated Award Title
+                </div>
+                <div class="card-body">
+                    
+                        {{ edit_form|crispy }}
+                        
+                    <strong>Note: </strong> Click update to preview the changes.
+                </div>
+                <div class="card-footer bg-transparent">
+                    <div class="d-flex justify-content-end">
+                        <a type="button" class="btn btn-outline-secondary btn-sm" href="{% url 'awards:award_title' %}">Cancel</a>
+                        &nbsp&nbsp<input class="btn btn-primary btn-sm" type="submit" value="Update"> 
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteAward" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Award</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete <strong>{{ instance.name|title }}</strong> award's?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">No</button>
+                <a href="#" type="button" class="btn btn-outline-danger btn-sm">Yes</a>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+{% endblock %}

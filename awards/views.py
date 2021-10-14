@@ -4,7 +4,7 @@ from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import AwardTitle, Awardee
-from .forms import AddAwardeeForm, AddAwardeeTitleForm
+from .forms import AddAwardeeForm, AddAwardeeTitleForm, AddBackgroundForm
 from django.http import HttpResponse
 from django.db.models import Q
 from django.template.loader import get_template
@@ -80,18 +80,25 @@ def adwardList(request):
     adward_title = AwardTitle.objects.all()
     form = AddAwardeeForm(request.POST or None)
     title_form = AddAwardeeTitleForm(request.POST or None)
+    background_form = AddBackgroundForm(
+        request.POST or None, request.FILES or None)
     if request.method == "POST":
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.user = request.user
+            # instance.user = request.user
             instance.save()
         if title_form.is_valid():
             obj = title_form.save(commit=False)
             obj.save()
+        if background_form.is_valid():
+            bg = background_form.save(commit=False)
+            bg.save()
         return redirect('awards:list')
     else:
         form = AddAwardeeForm(request.POST or None)
         title_form = AddAwardeeTitleForm(request.POST or None)
+        background_form = AddBackgroundForm(
+            request.POST or None, request.FILES or None)
 
     context = {
         "title": "list of awards",
@@ -99,7 +106,8 @@ def adwardList(request):
         "form": form,
         "to_export_awards": to_export_awards,
         "adward_title": adward_title,
-        "title_form": title_form
+        "title_form": title_form,
+        "background_form": background_form
     }
     return render(request, "list_awardee.html", context)
 
@@ -159,8 +167,8 @@ def updateTitle(request, *args, **kwargs):
         instance.save()
         return redirect('awards:award_title')
     context = {
-        # "title": "Update title",
+        "title": "Update title",
         "edit_form": form,
         "title_instance": instance,
     }
-    return render(request, "list_award_title.html", context)
+    return render(request, "update_award_title.html", context)

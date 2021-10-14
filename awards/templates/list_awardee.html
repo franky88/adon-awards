@@ -16,14 +16,21 @@
                 <div class="card-body">
                     <!-- Earnings (Monthly) Card Example -->
                     {% csrf_token %}
-                    <div class="d-flex flex-row">
-                        {{form.award_title|as_crispy_field}}
-                        <a href="" class="btn btn-outline-primary" style="margin-left: 5px; height: 40px; margin-top: 30px;" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editTitle"><i class="bi bi-plus-square"></i></a>
+                    <div class="d-flex justify-content-between">
+                        <div style="width: 100%;">
+                            {{form.award_title|as_crispy_field}}
+                        </div>
+                        <a href="" class="btn btn-outline-primary" style="margin-left: 5px; height: 38px; margin-top: 32px;" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#addTitle"><i class="bi bi-plus-square"></i></a>
                     </div>
                     {{form.name|as_crispy_field}}
                     {{form.citation|as_crispy_field}}
                     {{form.date|as_crispy_field}}
-                    {{form.background|as_crispy_field}}
+                    <div class="d-flex justify-content-between">
+                        <div style="width: 100%;">
+                            {{form.background|as_crispy_field}}
+                        </div>
+                        <a href="" class="btn btn-outline-primary" style="margin-left: 5px; height: 38px; margin-top: 32px;" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#addBG"><i class="bi bi-plus-square"></i></a>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <input class="btn btn-primary btn-sm" type="submit" value="Add award">
@@ -36,9 +43,9 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between">
                     <strong>{{title|title}}</strong>
-                    <button disabled type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="left" title="Under construction">
-                        <i class="bi bi-save"></i> EXPORT PDF
-                    </button>
+                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Under construction">
+                        <button class="btn btn-primary btn-sm" style="pointer-events: none;" type="button" disabled><i class="bi bi-save"></i> EXPORT PDF</button>
+                    </span>
                 </div>
             </div>
             <div class="card-body">
@@ -69,7 +76,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="editTitle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="addTitle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -86,6 +93,29 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <input class="btn btn-primary" type="submit" value="Add Title">
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addBG" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Add Background</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="modal-body">
+                {% csrf_token %}
+                {{ background_form|crispy }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <input class="btn btn-primary" type="submit" value="Add Background">
             </div>
         </form>
       </div>

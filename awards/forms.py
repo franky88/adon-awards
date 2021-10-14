@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import RadioSelect, widgets, TextInput
-from .models import Awardee, AwardTitle
+from .models import Awardee, AwardTitle, CertBG
 
 
 class AddAwardeeForm(forms.ModelForm):
@@ -24,4 +24,13 @@ class AddAwardeeTitleForm(forms.ModelForm):
         model = AwardTitle
         fields = [
             "title",
+        ]
+
+
+class AddBackgroundForm(forms.ModelForm):
+    class Meta:
+        model = CertBG
+        fields = [
+            "name",
+            "background"
         ]

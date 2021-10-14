@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'awards.apps.AwardsConfig',
-    # 'rest_framework',
+    'rest_framework',
     # 'awards_api.apps.AwardsApiConfig',
     'crispy_forms',
 ]
